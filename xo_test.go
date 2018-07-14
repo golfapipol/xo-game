@@ -5,17 +5,29 @@ import "testing"
 func Test_NewGame_Input_2_Players_Should_Be_Game_With_2_Players(t *testing.T) {
 	playerOne := NewPlayer("O")
 	playerTwo := NewPlayer("X")
+	boxSize := 3
 	expected := Game{
 		Players: []Player{
 			playerOne,
 			playerTwo,
 		},
-		Board: Board{},
+		Board: Board{
+			Slots: [][]State{
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+			},
+			Size: Size{
+				X: 3,
+				Y: 3,
+			},
+		},
 	}
 
-	actual := NewGame(playerOne, playerTwo)
+	actual := NewGame(playerOne, playerTwo, boxSize)
 
-	if len(expected.Players) != len(actual.Players) {
+	if len(expected.Players) != len(actual.Players) ||
+		expected.Board.Size != actual.Board.Size {
 		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 }
