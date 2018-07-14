@@ -24,15 +24,26 @@ func (g Game) Fill(row, col int, symbol string) {
 }
 
 func (g Game) GetWinner(player Player, row, col int) bool {
-	verticle := All(g.Board.Slots[row], func(state State) bool {
+	verticle := AllRow(g.Board.Slots[row], func(state State) bool {
 		return state.Symbol == player.Symbol
 	})
-	return verticle
+	horizontal := AllCol(g.Board.Slots, col, func(state State) bool {
+		return state.Symbol == player.Symbol
+	})
+	return verticle || horizontal
 }
 
-func All(vs []State, f func(State) bool) bool {
+func AllRow(vs []State, f func(State) bool) bool {
 	for _, v := range vs {
 		if !f(v) {
+			return false
+		}
+	}
+	return true
+}
+func AllCol(vs [][]State, col int, f func(State) bool) bool {
+	for i, _ := range vs {
+		if !f(vs[i][col]) {
 			return false
 		}
 	}
