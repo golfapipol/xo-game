@@ -117,3 +117,19 @@ func Test_NewSize_Input_3_Should_Be_Size_3x3(t *testing.T) {
 		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 }
+
+func Test_TurnOf_Input_Player_O_Position_2_2_Should_Be_Position_2_2_Symbol_O(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	position := Position{2, 2}
+	expectedState := State{Symbol: "O"}
+
+	game.TurnOf(playerOne, position)
+	actual := game.GetBoardPosition(2, 2)
+
+	if expectedState != actual {
+		t.Errorf("Expected %v but it got %v", expectedState, actual)
+	}
+
+}
