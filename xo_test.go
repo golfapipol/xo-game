@@ -309,3 +309,28 @@ func Test_NextPlayer_Current_Player_X_Should_Be_Player_O(t *testing.T) {
 		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 }
+
+func Test_IsContinue_with_Empty_Board_Should_Be_True(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	actual := game.IsContinue()
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
+
+func Test_IsContinue_with_Full_Board_Should_Be_False(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := false
+
+	game.Board.SlotLeft = 0
+	actual := game.IsContinue()
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
