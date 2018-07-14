@@ -17,8 +17,20 @@ func NewPlayer(symbol string) Player {
 	}
 }
 
+func NewBoard(size Size) Board {
+	state := make([][]State, size.Y)
+	for index := 0; index < size.Y; index++ {
+		state[index] = make([]State, size.X)
+	}
+	return Board{
+		Slots: state,
+		Size:  size,
+	}
+}
+
 type Board struct {
 	Slots [][]State
+	Size  Size
 }
 
 type State struct {
@@ -27,4 +39,9 @@ type State struct {
 
 type Player struct {
 	Symbol string
+}
+
+type Size struct {
+	X int
+	Y int
 }
