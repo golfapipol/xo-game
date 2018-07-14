@@ -1,13 +1,34 @@
 package xo
 
 type Game struct {
-	Players []Player
-	Board   Board
+	Players       []Player
+	CurrentPlayer Player
+	Board         Board
 }
 
-func (g Game) TurnOf(player Player, row, col int) {
+func (g *Game) TurnOf(player Player, row, col int) bool {
+	if g.CurrentPlayer != player {
+		return false
+	}
 	if g.IsBoardEmpty(row, col) {
 		g.Fill(row, col, player.Symbol)
+		g.NextPlayer()
+		return true
+	}
+	return false
+}
+
+func (g *Game) NextPlayer() {
+	for index, _ := range g.Players {
+		if g.CurrentPlayer == g.Players[index] {
+			if index == len(g.Players)-1 {
+				g.CurrentPlayer = g.Players[0]
+				return
+			} else {
+				g.CurrentPlayer = g.Players[index+1]
+				return
+			}
+		}
 	}
 }
 
@@ -104,8 +125,9 @@ func NewGame(playerOne, playerTwo Player, boxSize int) Game {
 	size := NewSize(boxSize)
 	board := NewBoard(size)
 	return Game{
-		Players: []Player{playerOne, playerTwo},
-		Board:   board,
+		Players:       []Player{playerOne, playerTwo},
+		CurrentPlayer: playerOne,
+		Board:         board,
 	}
 }
 
