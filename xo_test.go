@@ -76,3 +76,13 @@ func Test_NewBoard_Players_Should_Be_Board(t *testing.T) {
 		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 }
+
+func Test_NewSize_Input_3_Should_Be_Size_3x3(t *testing.T) {
+	input := 3
+	expected := Size{3, 3}
+
+	actual := NewSize(input)
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
