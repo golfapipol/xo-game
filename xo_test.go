@@ -218,10 +218,10 @@ func Test_GetWinner_Input_Player_X_Should_Be_True(t *testing.T) {
 	game.Fill(2, 2, playerTwo.Symbol)
 	game.Fill(1, 2, playerTwo.Symbol)
 	game.Fill(0, 2, playerTwo.Symbol)
-	actual := game.GetWinner(playerOne, 2, 0)
+	actual := game.GetWinner(playerTwo, 0, 2)
 
 	if expected != actual {
-		t.Errorf("Expected %v but it got %v", expected, actual)
+		t.Errorf("Expected %v but it got %v %v", expected, actual, game)
 	}
 
 }
