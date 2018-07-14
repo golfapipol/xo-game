@@ -18,6 +18,9 @@ func (g *Game) TurnOf(player Player, row, col int) bool {
 	return false
 }
 
+func (g *Game) IsContinue() bool {
+	return g.Board.SlotLeft > 0
+}
 func (g *Game) NextPlayer() {
 	for index, _ := range g.Players {
 		if g.CurrentPlayer == g.Players[index] {
@@ -42,6 +45,7 @@ func (g Game) IsBoardEmpty(row, col int) bool {
 
 func (g Game) Fill(row, col int, symbol string) {
 	g.Board.Slots[row][col].Symbol = symbol
+	g.Board.SlotLeft--
 }
 
 func (g Game) GetWinner(player Player, row, col int) bool {
@@ -99,8 +103,9 @@ func AllDiagonalRight(vs [][]State, player Player, f func(State, Player) bool) b
 }
 
 type Board struct {
-	Slots [][]State
-	Size  Size
+	Slots    [][]State
+	Size     Size
+	SlotLeft int
 }
 
 type State struct {
@@ -143,8 +148,9 @@ func NewBoard(size Size) Board {
 		state[index] = make([]State, size.X)
 	}
 	return Board{
-		Slots: state,
-		Size:  size,
+		Slots:    state,
+		Size:     size,
+		SlotLeft: size.X * size.Y,
 	}
 }
 
