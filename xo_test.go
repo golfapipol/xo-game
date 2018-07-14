@@ -221,7 +221,40 @@ func Test_GetWinner_Input_Player_X_Should_Be_True(t *testing.T) {
 	actual := game.GetWinner(playerTwo, 0, 2)
 
 	if expected != actual {
-		t.Errorf("Expected %v but it got %v %v", expected, actual, game)
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+
+}
+func Test_GetWinner_Input_Player_O_Should_Be_True_Diagonal(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	game.Fill(0, 2, playerOne.Symbol)
+	game.Fill(1, 1, playerOne.Symbol)
+	game.Fill(2, 0, playerOne.Symbol)
+	actual := game.GetWinner(playerOne, 2, 0)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+
+}
+
+func Test_GetWinner_Input_Player_X_Should_Be_True_Diagonal(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	game.Fill(0, 0, playerTwo.Symbol)
+	game.Fill(1, 1, playerTwo.Symbol)
+	game.Fill(2, 2, playerTwo.Symbol)
+	actual := game.GetWinner(playerTwo, 2, 2)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 
 }
