@@ -2,7 +2,7 @@ package xo
 
 import "testing"
 
-func Test_NewGame_Input_2_Players_Should_Be_Game_With_2_Players(t *testing.T) {
+func Test_NewGame_Input_2_Players_BoxSize_3_Should_Be_Game_BoxSize_3_With_2_Players(t *testing.T) {
 	playerOne := NewPlayer("O")
 	playerTwo := NewPlayer("X")
 	boxSize := 3
@@ -20,6 +20,37 @@ func Test_NewGame_Input_2_Players_Should_Be_Game_With_2_Players(t *testing.T) {
 			Size: Size{
 				X: 3,
 				Y: 3,
+			},
+		},
+	}
+
+	actual := NewGame(playerOne, playerTwo, boxSize)
+
+	if len(expected.Players) != len(actual.Players) ||
+		expected.Board.Size != actual.Board.Size {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
+func Test_NewGame_Input_2_Players_Size_5_Should_Be_Game_BoxSize_5_With_2_Players(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	boxSize := 5
+	expected := Game{
+		Players: []Player{
+			playerOne,
+			playerTwo,
+		},
+		Board: Board{
+			Slots: [][]State{
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+				[]State{State{}, State{}, State{}},
+			},
+			Size: Size{
+				X: 5,
+				Y: 5,
 			},
 		},
 	}
