@@ -122,14 +122,42 @@ func Test_TurnOf_Input_Player_O_Position_2_2_Should_Be_Position_2_2_Symbol_O(t *
 	playerOne := NewPlayer("O")
 	playerTwo := NewPlayer("X")
 	game := NewGame(playerOne, playerTwo, 3)
-	position := Position{2, 2}
 	expectedState := State{Symbol: "O"}
 
-	game.TurnOf(playerOne, position)
+	game.TurnOf(playerOne, 2, 2)
 	actual := game.GetBoardPosition(2, 2)
 
 	if expectedState != actual {
 		t.Errorf("Expected %v but it got %v", expectedState, actual)
+	}
+
+}
+
+func Test_IsBoardEmpty_Input_2_2_Should_Be_True(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	actual := game.IsBoardEmpty(2, 2)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+
+}
+
+func Test_IsBoardEmpty_Input_2_2_Should_Be_False(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := false
+
+	game.TurnOf(playerOne, 2, 2)
+	actual := game.IsBoardEmpty(2, 2)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 
 }
