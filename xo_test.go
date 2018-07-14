@@ -258,3 +258,54 @@ func Test_GetWinner_Input_Player_X_Should_Be_True_Diagonal(t *testing.T) {
 	}
 
 }
+
+func Test_TurnOf_Input_Player_O_Should_Be_True(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	actual := game.TurnOf(playerOne, 2, 2)
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
+
+func Test_TurnOf_Input_Player_X_Should_Be_False(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := false
+
+	actual := game.TurnOf(playerTwo, 2, 2)
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
+
+func Test_NextPlayer_Current_Player_O_Should_Be_Player_X(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := playerTwo
+
+	game.NextPlayer()
+	actual := game.CurrentPlayer
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
+
+func Test_NextPlayer_Current_Player_X_Should_Be_Player_O(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := playerOne
+
+	game.NextPlayer()
+	game.NextPlayer()
+	actual := game.CurrentPlayer
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
