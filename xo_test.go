@@ -41,3 +41,26 @@ func Test_NewPlayer_Input_X_Should_Be_Player_X(t *testing.T) {
 		t.Errorf("Expected %v but it got %v", expected, actual)
 	}
 }
+
+func Test_NewBoard_Players_Should_Be_Board(t *testing.T) {
+	size := Size{X: 3, Y: 3}
+	expected := Board{
+		Slots: [][]State{
+			[]State{State{}, State{}, State{}},
+			[]State{State{}, State{}, State{}},
+			[]State{State{}, State{}, State{}},
+		},
+		Size: Size{
+			X: 3,
+			Y: 3,
+		},
+	}
+
+	actual := NewBoard(size)
+
+	if len(expected.Slots) != len(actual.Slots) ||
+		len(expected.Slots[0]) != len(actual.Slots[0]) ||
+		expected.Size != actual.Size {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+}
