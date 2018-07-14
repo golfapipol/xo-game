@@ -11,6 +11,12 @@ func NewGame(playerOne, playerTwo Player) Game {
 	}
 }
 
+func NewPlayer(symbol string) Player {
+	return Player{
+		Symbol: symbol,
+	}
+}
+
 type Board struct {
 	Slots [][]State
 }
