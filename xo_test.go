@@ -161,3 +161,18 @@ func Test_IsBoardEmpty_Input_2_2_Should_Be_False(t *testing.T) {
 	}
 
 }
+
+func Test_Fill_Input_Position_2_2_Player_O_Should_Be_Position_2_2_Symbol_O(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expectedState := State{Symbol: "O"}
+
+	game.Fill(2, 2, playerOne.Symbol)
+	actual := game.GetBoardPosition(2, 2)
+
+	if expectedState != actual {
+		t.Errorf("Expected %v but it got %v", expectedState, actual)
+	}
+
+}
