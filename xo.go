@@ -5,9 +5,12 @@ type Game struct {
 	Board   Board
 }
 
-func NewGame(playerOne, playerTwo Player) Game {
+func NewGame(playerOne, playerTwo Player, boxSize int) Game {
+	size := NewSize(boxSize)
+	board := NewBoard(size)
 	return Game{
 		Players: []Player{playerOne, playerTwo},
+		Board:   board,
 	}
 }
 
@@ -26,6 +29,10 @@ func NewBoard(size Size) Board {
 		Slots: state,
 		Size:  size,
 	}
+}
+
+func NewSize(boxSize int) Size {
+	return Size{boxSize, boxSize}
 }
 
 type Board struct {
