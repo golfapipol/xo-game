@@ -24,26 +24,53 @@ func (g Game) Fill(row, col int, symbol string) {
 }
 
 func (g Game) GetWinner(player Player, row, col int) bool {
-	verticle := AllRow(g.Board.Slots[row], func(state State) bool {
-		return state.Symbol == player.Symbol
-	})
-	horizontal := AllCol(g.Board.Slots, col, func(state State) bool {
-		return state.Symbol == player.Symbol
-	})
-	return verticle || horizontal
+	verticle := AllRow(g.Board.Slots[row], player, MatchSymbol)
+	horizontal := AllCol(g.Board.Slots, player, col, MatchSymbol)
+	diagonalLeft := AllDiagonalLeft(g.Board.Slots, player, MatchSymbol)
+	diagonalRight := AllDiagonalRight(g.Board.Slots, player, MatchSymbol)
+	return verticle || horizontal || diagonalLeft || diagonalRight
 }
 
-func AllRow(vs []State, f func(State) bool) bool {
+func MatchSymbol(state State, player Player) bool {
+	return state.Symbol == player.Symbol
+}
+
+func AllRow(vs []State, player Player, f func(State, Player) bool) bool {
 	for _, v := range vs {
-		if !f(v) {
+		if !f(v, player) {
 			return false
 		}
 	}
 	return true
 }
-func AllCol(vs [][]State, col int, f func(State) bool) bool {
+func AllCol(vs [][]State, player Player, col int, f func(State, Player) bool) bool {
 	for i, _ := range vs {
-		if !f(vs[i][col]) {
+		if !f(vs[i][col], player) {
+			return false
+		}
+	}
+	return true
+}
+
+func AllDiagonalLeft(vs [][]State, player Player, f func(State, Player) bool) bool {
+	maxRow := len(vs)
+	maxCol := len(vs[0])
+
+	for i, j := 0, 0; i < maxRow && j < maxCol; i, j = i+1, j+1 {
+		if !f(vs[i][j], player) {
+			return false
+		}
+	}
+	return true
+
+}
+
+func AllDiagonalRight(vs [][]State, player Player, f func(State, Player) bool) bool {
+	maxRow := len(vs)
+	maxCol := len(vs[0])
+	lastCol := maxCol - 1
+	for i, j := 0, lastCol; i < maxRow && j >= 0; i, j = i+1, j-1 {
+		if !f(vs[i][j], player) {
 			return false
 		}
 	}
