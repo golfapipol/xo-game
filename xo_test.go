@@ -176,3 +176,35 @@ func Test_Fill_Input_Position_2_2_Player_O_Should_Be_Position_2_2_Symbol_O(t *te
 	}
 
 }
+
+func Test_GetWinner_Input_Player_O_Should_Be_False(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := false
+
+	game.Fill(2, 2, playerOne.Symbol)
+	actual := game.GetWinner(playerOne, 2, 2)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+
+}
+
+func Test_GetWinner_Input_Player_O_Should_Be_True(t *testing.T) {
+	playerOne := NewPlayer("O")
+	playerTwo := NewPlayer("X")
+	game := NewGame(playerOne, playerTwo, 3)
+	expected := true
+
+	game.Fill(2, 2, playerOne.Symbol)
+	game.Fill(2, 1, playerOne.Symbol)
+	game.Fill(2, 0, playerOne.Symbol)
+	actual := game.GetWinner(playerOne, 2, 0)
+
+	if expected != actual {
+		t.Errorf("Expected %v but it got %v", expected, actual)
+	}
+
+}
