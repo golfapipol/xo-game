@@ -23,6 +23,22 @@ func (g Game) Fill(row, col int, symbol string) {
 	g.Board.Slots[row][col].Symbol = symbol
 }
 
+func (g Game) GetWinner(player Player, row, col int) bool {
+	verticle := All(g.Board.Slots[row], func(state State) bool {
+		return state.Symbol == player.Symbol
+	})
+	return verticle
+}
+
+func All(vs []State, f func(State) bool) bool {
+	for _, v := range vs {
+		if !f(v) {
+			return false
+		}
+	}
+	return true
+}
+
 type Board struct {
 	Slots [][]State
 	Size  Size
