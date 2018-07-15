@@ -1,6 +1,7 @@
 package xo
 
 type Game struct {
+	Winner        Player
 	Players       []Player
 	CurrentPlayer Player
 	Board         Board
@@ -12,17 +13,16 @@ func (g *Game) TurnOf(player Player, row, col int) bool {
 	}
 	if g.IsBoardEmpty(row, col) {
 		g.Fill(row, col, player.Symbol)
-		g.NextPlayer()
 		return true
 	}
 	return false
 }
 
 func (g *Game) IsContinue() bool {
-	return g.Board.SlotLeft > 0
+	return g.Board.SlotLeft > 0 && g.Winner.Symbol == ""
 }
 func (g *Game) NextPlayer() {
-	for index, _ := range g.Players {
+	for index := range g.Players {
 		if g.CurrentPlayer == g.Players[index] {
 			if index == len(g.Players)-1 {
 				g.CurrentPlayer = g.Players[0]
@@ -69,8 +69,8 @@ func AllRow(vs []State, player Player, f func(State, Player) bool) bool {
 	return true
 }
 func AllCol(vs [][]State, player Player, col int, f func(State, Player) bool) bool {
-	for i, _ := range vs {
-		if !f(vs[i][col], player) {
+	for index := range vs {
+		if !f(vs[index][col], player) {
 			return false
 		}
 	}
